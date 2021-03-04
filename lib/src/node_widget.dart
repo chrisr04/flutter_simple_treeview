@@ -64,8 +64,7 @@ class _NodeWidgetState extends State<NodeWidget> {
                 icon: Icon(icon, color: Colors.white),
                 onPressed: onIconPressed,
               ),
-            )
-            
+            ),
             widget.treeNode.content,
           ],
         ),
