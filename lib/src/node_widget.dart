@@ -57,14 +57,15 @@ class _NodeWidgetState extends State<NodeWidget> {
       children: [
         Row(
           children: [
-            Transform.scale(
-              scale: 0.7,
-              child: IconButton(
-                iconSize: widget.iconSize ?? 24.0,
-                icon: Icon(icon, color: Colors.white),
-                onPressed: onIconPressed,
+            if(icon != null)
+              Transform.scale(
+                scale: 0.7,
+                child: IconButton(
+                  iconSize: widget.iconSize ?? 24.0,
+                  icon: Icon(icon, color: Colors.white),
+                  onPressed: onIconPressed,
+                ),
               ),
-            ),
             widget.treeNode.content,
           ],
         ),
