@@ -34,7 +34,7 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
   AnimationController expandController;
   Animation<double> animation; 
 
-  void _prepareAnimations() {
+  void prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500)
@@ -66,7 +66,7 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    _prepareAnimations();
+    prepareAnimations();
     _runExpandCheck();
     super.initState();
   }
