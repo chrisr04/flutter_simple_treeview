@@ -65,9 +65,9 @@ class _NodeWidgetState extends State<NodeWidget> {
 
     @override
   void initState() {
-    super.initState();
     _prepareAnimations();
     _expandCheck();
+    super.initState();
   }
 
   @override
