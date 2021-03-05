@@ -66,9 +66,9 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    super.initState();
     _prepareAnimations();
     _runExpandCheck();
+    super.initState();
   }
 
   @override
