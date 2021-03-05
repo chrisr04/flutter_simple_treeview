@@ -30,10 +30,6 @@ class NodeWidget extends StatefulWidget {
 }
 
 class _NodeWidgetState extends State<NodeWidget> {
-
-  AnimationController expandController;
-  Animation<double> animation;
-
   bool get _isLeaf {
     return widget.treeNode.children == null ||
         widget.treeNode.children!.isEmpty;
@@ -41,33 +37,6 @@ class _NodeWidgetState extends State<NodeWidget> {
 
   bool get _isExpanded {
     return widget.state.isNodeExpanded(widget.treeNode.key!);
-  }
-
-    ///Setting up the animation
-  void _prepareAnimations() {
-    expandController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500)
-    );
-    animation = CurvedAnimation(
-      parent: expandController,
-      curve: Curves.fastOutSlowIn,
-    );
-  }
-
-  void _expandCheck(){
-    if (_isExpanded && !_isLeaf){
-      expandController.forward();
-    }else{
-      expandController.reverse();
-    }
-  }
-
-    @override
-  void initState() {
-    _prepareAnimations();
-    _expandCheck();
-    super.initState();
   }
 
   @override
@@ -81,10 +50,7 @@ class _NodeWidgetState extends State<NodeWidget> {
     var onIconPressed = _isLeaf
         ? null
         : () => setState(
-            () {
-              widget.state.toggleNodeExpanded(widget.treeNode.key!);
-              _expandCheck();
-            });
+            () => widget.state.toggleNodeExpanded(widget.treeNode.key!));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,17 +69,12 @@ class _NodeWidgetState extends State<NodeWidget> {
             widget.treeNode.content,
           ],
         ),
-    
-        SizeTransition(
-          axisAlignment: 1.0,
-          sizeFactor: animation,
-          child: Padding(
+        if (_isExpanded && !_isLeaf)
+          Padding(
             padding: EdgeInsets.only(left: widget.indent!),
             child: buildNodes(widget.treeNode.children!, widget.indent,
                 widget.state, widget.iconSize),
           )
-        )
-          
       ],
     );
   }
