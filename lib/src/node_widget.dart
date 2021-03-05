@@ -66,9 +66,16 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    prepareAnimations();
-    _runExpandCheck();
     super.initState();
+    expandController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500)
+    );
+    animation = CurvedAnimation(
+      parent: expandController,
+      curve: Curves.fastOutSlowIn,
+    );
+    _runExpandCheck();
   }
 
   @override
