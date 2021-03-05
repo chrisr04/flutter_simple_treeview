@@ -49,7 +49,6 @@ class _TreeViewState extends State<TreeView> {
 
   @override
   Widget build(BuildContext context) {
-    return buildNodes(
-        widget.nodes, widget.indent, _controller!, widget.iconSize);
+    return buildNodes(widget.nodes, widget.indent, _controller!, widget.iconSize);
   }
 }

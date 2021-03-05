@@ -56,8 +56,7 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
   }
 
   bool get _isLeaf {
-    return widget.treeNode.children == null ||
-        widget.treeNode.children!.isEmpty;
+    return widget.treeNode.children == null || widget.treeNode.children!.isEmpty;
   }
 
   bool get _isExpanded {
@@ -68,6 +67,12 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _prepareAnimations();
+    _runExpandCheck();
+  }
+
+  @override
+  void didUpdateWidget(NodeWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _runExpandCheck();
   }
 
@@ -104,7 +109,6 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
             widget.treeNode.content,
           ],
         ),
-        
         SizeTransition(
           axisAlignment: 1.0,
           sizeFactor: animation,
@@ -112,8 +116,7 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
             padding: EdgeInsets.only(left: widget.indent!),
             child: buildNodes(widget.treeNode.children!, widget.indent, widget.state, widget.iconSize),
           )
-        )
-          
+        ) 
       ],
     );
   }
