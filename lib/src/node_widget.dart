@@ -31,10 +31,10 @@ class NodeWidget extends StatefulWidget {
 
 class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateMixin {
 
-  AnimationController expandController;
-  Animation<double> animation; 
+  var expandController;
+  var animation;
 
-  void prepareAnimations() {
+  void _prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500)
@@ -67,14 +67,7 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    expandController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500)
-    );
-    animation = CurvedAnimation(
-      parent: expandController,
-      curve: Curves.fastOutSlowIn,
-    );
+    _prepareAnimations();
     _runExpandCheck();
   }
 
