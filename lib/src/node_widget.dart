@@ -29,7 +29,32 @@ class NodeWidget extends StatefulWidget {
   _NodeWidgetState createState() => _NodeWidgetState();
 }
 
-class _NodeWidgetState extends State<NodeWidget> {
+class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateMixin {
+
+  AnimationController expandController;
+  Animation<double> animation; 
+
+  void _prepareAnimations() {
+    expandController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500)
+    );
+    animation = CurvedAnimation(
+      parent: expandController,
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
+  void _runExpandCheck() {
+
+    if (_isExpanded && !_isLeaf) {
+      expandController.forward();
+    }
+    else {
+      expandController.reverse();
+    }
+  }
+
   bool get _isLeaf {
     return widget.treeNode.children == null ||
         widget.treeNode.children!.isEmpty;
@@ -37,6 +62,13 @@ class _NodeWidgetState extends State<NodeWidget> {
 
   bool get _isExpanded {
     return widget.state.isNodeExpanded(widget.treeNode.key!);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _prepareAnimations();
+    _runExpandCheck();
   }
 
   @override
@@ -50,7 +82,10 @@ class _NodeWidgetState extends State<NodeWidget> {
     var onIconPressed = _isLeaf
         ? null
         : () => setState(
-            () => widget.state.toggleNodeExpanded(widget.treeNode.key!));
+            () { 
+              widget.state.toggleNodeExpanded(widget.treeNode.key!);
+              _runExpandCheck();
+            });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,12 +104,16 @@ class _NodeWidgetState extends State<NodeWidget> {
             widget.treeNode.content,
           ],
         ),
-        if (_isExpanded && !_isLeaf)
-          Padding(
+        
+        SizeTransition(
+          axisAlignment: 1.0,
+          sizeFactor: animation,
+          child: Padding(
             padding: EdgeInsets.only(left: widget.indent!),
-            child: buildNodes(widget.treeNode.children!, widget.indent,
-                widget.state, widget.iconSize),
+            child: buildNodes(widget.treeNode.children!, widget.indent, widget.state, widget.iconSize),
           )
+        )
+          
       ],
     );
   }
