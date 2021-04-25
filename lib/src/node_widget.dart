@@ -99,7 +99,7 @@ class _NodeWidgetState extends State<NodeWidget> with SingleTickerProviderStateM
           children: [
             if(icon != null)
               Transform.scale(
-                scale: 0.7,
+                scale: 0.5,
                 child: IconButton(
                   iconSize: widget.iconSize ?? 24.0,
                   icon: Icon(icon, color: Colors.white),
