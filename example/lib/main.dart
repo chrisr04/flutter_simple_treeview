@@ -56,10 +56,7 @@ class Demo extends StatelessWidget {
     return SingleChildScrollView(
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Padding(
-          padding: EdgeInsets.all(40),
-          child: content,
-        ),
+        child: content,
       ),
     );
   }

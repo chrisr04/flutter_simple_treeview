@@ -21,6 +21,7 @@ List<TreeNode>? _copyNodesRecursively(
     return TreeNode(
       key: keyProvider.key(n.key),
       content: n.content,
+      avatarPhoto: n.avatarPhoto,
       children: _copyNodesRecursively(n.children, keyProvider),
     );
   }));

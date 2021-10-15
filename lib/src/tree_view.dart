@@ -5,6 +5,7 @@
 // https://developers.google.com/open-source/licenses/bsd
 
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_treeview/src/primitives/tree_theme.dart';
 
 import 'builder.dart';
 import 'copy_tree_nodes.dart';
@@ -16,22 +17,27 @@ class TreeView extends StatefulWidget {
   /// List of root level tree nodes.
   final List<TreeNode> nodes;
 
-  /// Horizontal indent between levels.
-  final double? indent;
-
-  /// Size of the expand/collapse icon.
-  final double? iconSize;
-
   /// Tree controller to manage the tree state.
   final TreeController? treeController;
 
-  TreeView(
-      {Key? key,
-      required List<TreeNode> nodes,
-      this.indent = 40,
-      this.iconSize,
-      this.treeController})
-      : nodes = copyTreeNodes(nodes),
+  /// Theme of widget
+  final TreeTheme theme;
+
+  /// Circle radius of avatar widget
+  final double avatarRadius;
+
+  /// allow expand all nodes of tree. if is [false] none node could be expanded
+  final bool expandNodes;
+
+  TreeView({
+    Key? key,
+    required List<TreeNode> nodes,
+    this.treeController,
+    this.expandNodes = true,
+    this.theme = const TreeTheme(),
+    double avatarRadius = 20.0,
+  })  : nodes = copyTreeNodes(nodes),
+        avatarRadius = (avatarRadius < 10.0) ? 10.0 : avatarRadius,
         super(key: key);
 
   @override
@@ -49,6 +55,13 @@ class _TreeViewState extends State<TreeView> {
 
   @override
   Widget build(BuildContext context) {
-    return buildNodes(widget.nodes, widget.indent, _controller!, widget.iconSize);
+    return buildNodes(
+      null,
+      widget.nodes,
+      widget.avatarRadius,
+      _controller!,
+      widget.theme,
+      widget.expandNodes,
+    );
   }
 }

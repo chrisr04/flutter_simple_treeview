@@ -11,7 +11,12 @@ class TreeNode {
   final List<TreeNode>? children;
   final Widget content;
   final Key? key;
+  final String? avatarPhoto;
 
-  TreeNode({this.key, this.children, Widget? content})
-      : content = content ?? Container(width: 0, height: 0);
+  TreeNode({
+    this.key,
+    this.children,
+    Widget? content,
+    this.avatarPhoto,
+  }) : content = content ?? Container(width: 0, height: 0);
 }

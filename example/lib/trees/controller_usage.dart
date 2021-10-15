@@ -23,34 +23,42 @@ class _ControllerUsageState extends State<ControllerUsage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        Row(
+          children: [
+            ElevatedButton(
+              child: Text("Expand All"),
+              onPressed: () => setState(() {
+                _controller.expandAll();
+              }),
+            ),
+            SizedBox(width: 10.0),
+            ElevatedButton(
+              child: Text("Collapse All"),
+              onPressed: () => setState(() {
+                _controller.collapseAll();
+              }),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            ElevatedButton(
+              child: Text("Expand node 2.2"),
+              onPressed: () => setState(() {
+                _controller.expandNode(_key);
+              }),
+            ),
+            SizedBox(width: 10.0),
+            ElevatedButton(
+              child: Text("Collapse node 2.2"),
+              onPressed: () => setState(() {
+                _controller.collapseNode(_key);
+              }),
+            ),
+          ],
+        ),
         SizedBox(
-          height: 300,
-          width: 300,
           child: buildTree(),
-        ),
-        ElevatedButton(
-          child: Text("Expand All"),
-          onPressed: () => setState(() {
-            _controller.expandAll();
-          }),
-        ),
-        ElevatedButton(
-          child: Text("Collapse All"),
-          onPressed: () => setState(() {
-            _controller.collapseAll();
-          }),
-        ),
-        ElevatedButton(
-          child: Text("Expand node 22"),
-          onPressed: () => setState(() {
-            _controller.expandNode(_key);
-          }),
-        ),
-        ElevatedButton(
-          child: Text("Collapse node 22"),
-          onPressed: () => setState(() {
-            _controller.collapseNode(_key);
-          }),
         ),
       ],
     );
@@ -59,23 +67,154 @@ class _ControllerUsageState extends State<ControllerUsage> {
   Widget buildTree() {
     return TreeView(
       treeController: _controller,
+      expandNodes: true,
+      theme: TreeTheme(
+        lineWidth: 2.0,
+        lineType: LineType.curved,
+        lineColor: Colors.green,
+        nodeColor: Colors.red,
+      ),
+      avatarRadius: 20.0,
       nodes: [
-        TreeNode(content: Text("node 1")),
         TreeNode(
-          content: Icon(Icons.audiotrack),
+          content: Container(
+            padding: EdgeInsets.only(
+              left: 5,
+              top: 10,
+              bottom: 20,
+            ),
+            child: Text("node 1"),
+          ),
+        ),
+        TreeNode(
+          content: Container(
+            padding: EdgeInsets.only(
+              left: 5,
+              top: 10,
+              bottom: 20,
+            ),
+            child: Text("node 2"),
+          ),
           children: [
-            TreeNode(content: Text("node 21")),
             TreeNode(
-              content: Text("node 22"),
+              content: Container(
+                constraints: BoxConstraints(maxWidth: 500),
+                padding: EdgeInsets.only(
+                  left: 5,
+                  top: 10,
+                  bottom: 20,
+                ),
+                child: Text(
+                  "node 2.1",
+                ),
+              ),
+              children: [
+                TreeNode(
+                  content: Container(
+                    padding: EdgeInsets.only(
+                      left: 5,
+                      top: 10,
+                      bottom: 20,
+                    ),
+                    child: Text("node 2.1.1"),
+                  ),
+                )
+              ],
+            ),
+            TreeNode(
+              content: Container(
+                padding: EdgeInsets.only(
+                  left: 5,
+                  top: 10,
+                  bottom: 20,
+                ),
+                child: Text("node 2.2"),
+              ),
               key: _key,
               children: [
                 TreeNode(
-                  content: Icon(Icons.sentiment_very_satisfied),
+                  content: Container(
+                    constraints: BoxConstraints(maxWidth: 500),
+                    padding: EdgeInsets.only(
+                      left: 5,
+                      top: 10,
+                      bottom: 20,
+                    ),
+                    child: Text(
+                      "node 2.2.1",
+                    ),
+                  ),
+                ),
+                TreeNode(
+                  content: Container(
+                    constraints: BoxConstraints(maxWidth: 500),
+                    padding: EdgeInsets.only(
+                      left: 5,
+                      top: 10,
+                      bottom: 20,
+                    ),
+                    child: Text(
+                      "node 2.2.2",
+                    ),
+                  ),
+                  children: [
+                    TreeNode(
+                      content: Container(
+                        padding: EdgeInsets.only(
+                          left: 5,
+                          top: 10,
+                          bottom: 20,
+                        ),
+                        child: Text("node 2.2.2.1"),
+                      ),
+                      children: [
+                        TreeNode(
+                          content: Container(
+                            padding: EdgeInsets.only(
+                              left: 5,
+                              top: 10,
+                              bottom: 20,
+                            ),
+                            child: Text("node 2.2.2.1.1"),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TreeNode(
+                      content: Container(
+                        padding: EdgeInsets.only(
+                          left: 5,
+                          top: 10,
+                          bottom: 20,
+                        ),
+                        child: Text("node 2.2.2.3"),
+                      ),
+                      children: [
+                        TreeNode(
+                          content: Container(
+                            padding: EdgeInsets.only(
+                              left: 5,
+                              top: 10,
+                              bottom: 20,
+                            ),
+                            child: Text("node 2.2.2.3.1"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
             TreeNode(
-              content: Text("node 23"),
+              content: Container(
+                padding: EdgeInsets.only(
+                  left: 5,
+                  top: 10,
+                  bottom: 20,
+                ),
+                child: Text("node 3"),
+              ),
             ),
           ],
         ),
